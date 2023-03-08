@@ -16,3 +16,14 @@ steps:
     repository: $(imageName)
     command: build
     Dockerfile: app/Dockerfile
+
+jobs:
+- job: Foo
+
+  steps:
+  - script: echo Hello!
+    condition: always() # this step will always run, even if the pipeline is canceled
+
+- job: Bar
+  dependsOn: Foo
+  condition: failed() # this job will only run if Foo fails
